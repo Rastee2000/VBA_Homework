@@ -1,0 +1,41 @@
+Sub StockVolume()
+
+'Define varibles
+Dim i As Long
+Dim j As Integer
+Dim lastrow As Long
+
+'Create headers for columns 9 & 10
+For Each ws In Worksheets
+
+    ws.Cells(1, 9).Value = "Ticker"
+    ws.Cells(1, 10).Value = "Total Volume"
+    lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+    
+        'Set initial value of Total Volume
+        j = 2
+        ws.Cells(2, 10).Value = 0
+
+            'Loop through each row
+            For i = 2 To lastrow
+            
+                'Check ticker on next row
+                If ws.Cells(i, 1).Value <> ws.Cells(i + 1, 1) Then
+                
+                ws.Cells(j, 9).Value = ws.Cells(i, 1).Value
+                ws.Cells(j, 10).Value = ws.Cells(j, 10).Value + ws.Cells(i, 7).Value
+                
+                j = j + 1
+            
+            Else
+            
+            'Compute total stock volume
+            ws.Cells(j, 10).Value = ws.Cells(j, 10).Value + ws.Cells(i, 7).Value
+        
+        End If
+    
+    Next i
+
+Next ws
+
+End Sub
